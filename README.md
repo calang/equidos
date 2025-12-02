@@ -1,34 +1,67 @@
 # Equids
 Visual identification of equids (horses, donkeys, mules) pre-registered individuals.
 
-## References
-### [EQUiD — Biometric Horse Identity Verification](https://tuul.ai/our-work/equid-horse-identification)
-December 10, 2024
+## Overview
+This repository contains code, initial training data and documentation for a visual identification model for equids.
 
-### [Multiview horses’ faces database](https://learningnetwork.ictforag.com/resources/multiview-horses-rsquo-faces-database)
-### [Thodbrl2015-database](https://ieee-dataport.org/open-access/thodbrl2015-database)
-Animal recognition is an active research topic in recent years. Horse’s recognition is an important task in the world and  in  order  to  promote  horse’s  recognition  research,  the  Tunisian  Research  Groups  in  Intelligent  Machines  of University of Sfax (REGIM of Sfax) will provide the Tunisian Horses DataBase of Regim Lab’2015 (THoDBRL’2015) freely of charge to mainly horses’ face recognition researchers and to increase total of researches done to enhance animal recognition. This Database is used in [1]. The main objective of the construction of this database is to identify horses keeping its natural behavior without any direct contact between the animal and the camera.
+The system leverages computer vision and machine learning techniques to identify individual equids based on images of their faces.
 
-THoDBRL’2015 database is a multiview horses’ faces database, which is created in March 2015. Images of 47 horses’ faces were captured from four equestrian centers in Sfax (a south town in Tunisia) during 3 days in daylight. The size of the database is 4.67Go and contains 2820 images.
+## Motivation
+The current method of identifying equids relies on microchips, which can be invasive and sometimes unreliable. By developing a visual identification system, we aim to provide a non-invasive, efficient, and scalable solution for equid identification.
 
-All documents and papers that uses the Tunisian Horses DataBase of Regim Lab’2015 (THoDBRL’2015) will acknowledge the use of the database by including an appropriate citation to the following
+Numerous rural communities in Costa Rica depend on equids for transportation and agricultural work. Proper identification is crucial for managing health records, ownership, and welfare of these animals. A visual identification system can significantly enhance the ability to monitor and care for equids in these communities.
 
-[1] Islem Jarraya, Wael Ouarda, and Adel M. Alimi. "A preliminary investigation on horses recognition using facial texture features." In 2015 IEEE International Conference on Systems, Man, and Cybernetics, pp. 2803-2808. IEEE, 2015.
+## General Objectives
+Identify equids by their faces to progressively replace the use of chips, achieving a less invasive and more efficient alternative.
 
-### [A preliminary investigation on horses recognition using facial texture features](https://ieeexplore.ieee.org/document/7379621)
+## Specific Objectives
+The system to be built must be capable of
+- identifying equids from images taken in various conditions, including different lighting, angles, and backgrounds.
+- handling a growing database of equid individuals as more animals are registered over time
+- being user-friendly for non-technical users, such as farmers and veterinarians.
+- operating on mobile devices to facilitate field use.
+- operate in offline mode, considering that rural areas may have limited internet connectivity.
+- scaling to accommodate a large number of equids as the system is adopted more widely.
+- being adaptable to different equid species, including horses, donkeys, and mules.
+- being open-source to encourage community contributions and improvements.
+- providing comprehensive documentation to assist users in setup and operation.
+- ensuring data privacy and security, especially regarding ownership information.
 
-Abstract Summary
-The paper proposes a biometric identification system for horses based on facial texture features to replace invasive methods like hot branding or tattooing. The authors created a database called THoFDRL'2015 (Horses Face Database of REGIM Lab). They utilized Gabor filters and Local Binary Patterns (LBP) for feature extraction and achieved a recognition rate of 95.74% using Mahcosine distance.
+## Features
+- Image preprocessing and augmentation
+- Feature extraction using deep learning models
+- Individual identification and classification
+- Addition of new individuals to the database
+- Performance evaluation metrics
+- User-friendly interface for uploading and identifying equid images
+- Support for multiple equid species
+- Open-source and customizable codebase
+- Scalability for large datasets
+- Extensive documentation and examples
 
-Papers mentioned at that link are included in the docs/papers folder.
+## Context: Number of Equids to Identify
+Currently, as of 2025, around **850** equids have been identified nationwide. The intention is for this system to scale and also be used outside of Costa Rica.
 
-###
-#### MiewID - Modelo Multiespecies de Re-Identificación
-Described at this [Perplexity AI search](https://www.perplexity.ai/search/produce-una-busqueda-inicial-d-bpGIleKyRh2liTHgPQj28g).
+## Available Data or Data Sources
+To get started, we could rely on datasets available on the web or, ideally, coordinate photo sampling sessions at one of the locations we previously visited, ensuring the quality and consistency of the images.
 
-Sublinks:
-- [AI Muzzle Recognition](https://cattleverify.com/ai-muzzle-recognition)
-- [The Goodhaar Process](https://godhaar.com/)
-- [When Language Model Guides Vision: Grounding DINO for Cattle Muzzle Detection](https://arxiv.org/html/2509.06427v1)
+## Performance Requirements
+The ideal would be to maximize the model's accuracy, as the ultimate goal is to replace the chip-based identification method.
+
+## Operational Requirements
+Identification would be via a mobile device, like a mobile phone.
+
+## Evaluation Metrics
+- Accuracy: Percentage of correctly identified equids.
+- Precision and Recall: To evaluate the model's performance in identifying individual equids.
+- F1 Score: To balance precision and recall.
+- Inference Time: Time taken to identify an equid from an image.
+- User Satisfaction: Feedback from end-users regarding the usability of the system.
+- Scalability: Ability to handle an increasing number of equids in the database without significant performance degradation.
+- Robustness: Performance under varying conditions such as lighting, angle, and occlusions.
+- Adaptability: Ease of adding new equid species or individuals to the system.
+- Offline Functionality: Effectiveness of the system when used without internet connectivity.
+- Documentation Quality: Clarity and comprehensiveness of the provided documentation for users and developers.
+- Security: Measures in place to protect ownership and identification data.
 
 
