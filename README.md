@@ -52,16 +52,24 @@ The ideal would be to maximize the model's accuracy, as the ultimate goal is to 
 Identification would be via a mobile device, like a mobile phone.
 
 ## Evaluation Metrics
+### Key Performance Indicators (KPIs)
 - Accuracy: Percentage of correctly identified equids.
 - Precision and Recall: To evaluate the model's performance in identifying individual equids.
 - F1 Score: To balance precision and recall.
 - Inference Time: Time taken to identify an equid from an image.
 - User Satisfaction: Feedback from end-users regarding the usability of the system.
+- Offline Functionality: Effectiveness of the system when used without internet connectivity.
+- Adaptability: Ease of adding new equid species or individuals to the system.
+
+### Complementary Metrics
 - Scalability: Ability to handle an increasing number of equids in the database without significant performance degradation.
 - Robustness: Performance under varying conditions such as lighting, angle, and occlusions.
-- Adaptability: Ease of adding new equid species or individuals to the system.
-- Offline Functionality: Effectiveness of the system when used without internet connectivity.
 - Documentation Quality: Clarity and comprehensiveness of the provided documentation for users and developers.
 - Security: Measures in place to protect ownership and identification data.
 
+## System Architecture
+See [docs/system_architecture.md](docs/system_architecture.md) for details on the system architecture.
+
+## References
+See [docs/references.md](docs/references.md) for a list of relevant references and resources.
 
