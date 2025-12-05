@@ -24,8 +24,8 @@ Papers mentioned at that link are included in the docs/papers folder.
 Described at this [Perplexity AI search](https://www.perplexity.ai/search/produce-una-busqueda-inicial-d-bpGIleKyRh2liTHgPQj28g).
 
 Sublinks:
-- [AI Muzzle Recognition](https://cattleverify.com/ai-muzzle-recognition)
-- [The Goodhaar Process](https://godhaar.com/)
-- [When Language Model Guides Vision: Grounding DINO for Cattle Muzzle Detection](https://arxiv.org/html/2509.06427v1)
+- [When Language Model Guides Vision: Grounding DINO for Cattle Muzzle Detection](https://arxiv.org/html/2509.06427v1) - arXiv, September 12, 2024, downloaded into papers directory.
+- [AI Muzzle Recognition](https://cattleverify.com/ai-muzzle-recognition) - a commercial service for cattle identification using AI-based muzzle recognition.
+- [The Goodhaar Process](https://godhaar.com/) - another commercial service for livestock identification.
 
 
