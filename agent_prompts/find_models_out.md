@@ -20,8 +20,8 @@ The most common approach is to take a strong vision backbone and fine-tune it on
 
 To train these models, you need data. There are datasets available on Hugging Face or linked through it that are relevant:
 
-**AnimalWeb**: Contains various animal faces.
-**Horse2Zebra**: While used for style transfer, it contains many horse images that can be used for pre-training.
+- **AnimalWeb**: Contains various animal faces.
+- **Horse2Zebra**: While used for style transfer, it contains many horse images that can be used for pre-training.
 
 ## 3. Zero-Shot Object Detection (for locating the face)
 
