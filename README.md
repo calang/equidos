@@ -5,8 +5,9 @@ Visual identification of equids (horses, donkeys, mules) pre-registered individu
 See [Project_Description](Project_Description.md) for details.
 
 ## Requirements
+Linux or MacOS system with:
 - `mamba` or `miniconda` or `conda` for managing the virtual environment.
-- Python 3.14+ (included in the `mamba` environment)
+- Python 3.11 (included in the `mamba` environment description: `env.yml`)
 
 
 ## Installation
