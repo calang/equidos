@@ -11,8 +11,11 @@ BRANCH := $(shell git branch --show-current)
 
 # ENV_NAME is second word, separated by one space, in file env.yml
 ENV_NAME := $(shell head -1 env.yml | cut -d ' ' -f 2)
-# # : command is as an internal bash no-op command
+
+# : command is as an internal bash no-op command
 TF_SETENV := :
+
+# enable these lines if using GPU version of tensorflow
 
 # # CUDA_DIR := /home/calang/installed/miniforge3/envs/${ENV_NAME}
 # CUDA_DIR := ${CONDA_PREFIX}
@@ -45,9 +48,9 @@ update-env:
 rm-env:
 	conda env remove -n ${ENV_NAME}
 
-# target: requirements - install/update python required packages
-requirements:	ALWAYS
-	pip install --upgrade -r requirements.txt
+# # target: requirements - install/update python required packages
+# requirements:	ALWAYS
+# 	pip install --upgrade -r requirements.txt
 
 # target: coding-standards - coding instructions for agents
 coding-standards:	../common/coding-standards
