@@ -46,8 +46,6 @@ Note: execution output:
 
 ```plaintext
 (equids) main calang@calang-xps:equidos$ time src/sandbag/try_face.py
-/home/calang/installed/miniforge3/envs/equids/lib/python3.13/site-packages/transformers/models/owlvit/processing_owlvit.py:217: FutureWarning: `post_process_object_detection` method is deprecated for OwlVitProcessor and will be removed in v5. Use `post_process_grounded_object_detection` instead.
-  warnings.warn(
 Detected a photo of a horse face with confidence 0.146 at location [254.96, 34.35, 475.37, 454.83]
 Detected a photo of a horse face with confidence 0.139 at location [270.74, 48.28, 469.58, 457.94]
 
