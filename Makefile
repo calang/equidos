@@ -11,9 +11,11 @@ BRANCH := $(shell git branch --show-current)
 
 # ENV_NAME is second word, separated by one space, in file env.yml
 ENV_NAME := $(shell head -1 env.yml | cut -d ' ' -f 2)
-# : command is as an internal bash no-op command
+# # : command is as an internal bash no-op command
 TF_SETENV := :
-# CUDA_DIR := /home/calang/installed/miniforge3/envs/${ENV_NAME}
+
+# # CUDA_DIR := /home/calang/installed/miniforge3/envs/${ENV_NAME}
+# CUDA_DIR := ${CONDA_PREFIX}
 # XLA_FLAGS := --xla_gpu_cuda_data_dir=${CUDA_DIR}
 # TF_ENABLE_ONEDNN_OPTS := 0
 # TF_SETENV := export CUDA_DIR=${CUDA_DIR} XLA_FLAGS=${XLA_FLAGS} TF_ENABLE_ONEDNN_OPTS=${TF_ENABLE_ONEDNN_OPTS}
@@ -26,10 +28,18 @@ help:
 	@echo
 	@egrep -h "^# target:" [Mm]akefile | sed -e 's/^# target: //'
 
+# target: show-vars - show defined variables
+show-vars:
+	@echo "REPO_ROOT=${REPO_ROOT}"
+	@echo "BRANCH=${BRANCH}"
+	@echo "ENV_NAME=${ENV_NAME}"
+	@echo "CUDA_DIR=${CUDA_DIR}"
+	@echo "XLA_FLAGS=${XLA_FLAGS}"
+	@echo "TF_SETENV=${TF_SETENV}"
 
 # target: update-env - update conda environment based on latest content of environment.yml file
 update-env:
-	$(TF_SETENV); conda env update -f env.yml
+	$(TF_SETENV); conda env update -f env.yml --prune
 
 # target: rm-env - update conda environment based on latest content of environment.yml file
 rm-env:
@@ -39,10 +49,9 @@ rm-env:
 requirements:	ALWAYS
 	pip install --upgrade -r requirements.txt
 
-# # target: .venv - create local venv
-# .venv:	ALWAYS
-# 	python3 -m venv .venv
-# 	. .venv/bin/activate; pip install --upgrade pip
+# target: coding-standards - coding instructions for agents
+coding-standards:	../common/coding-standards
+	cp -R ../common/coding-standards .
 
 # target: jupl - start jupiter lab server
 jupl:	ALWAYS
