@@ -10,9 +10,14 @@ The project includes:
 - Evaluating its performance using accuracy and a confusion matrix
 - Creating a function to predict a horse from a new image
 
+## Dataset link
+
+[Dataset link](https://drive.google.com/drive/folders/1bjlwqtK-vFaOxL1ogbCCzbeuXp43tud0).
+
 ## Colab Link
 
-https://colab.research.google.com/drive/1PM58yQYGgp-jvzo5E0AJ0Zm8mhGRalYr?usp=sharing
+[Colab Link](https://colab.research.google.com/drive/1PM58yQYGgp-jvzo5E0AJ0Zm8mhGRalYr?usp=sharing).
+
 
 ## Comments
 This experiment uses **transfer learning** with the ResNet50 architecture, replacing or adding its final layers to identify individual horses from a given dataset of **5 possible classes**.
