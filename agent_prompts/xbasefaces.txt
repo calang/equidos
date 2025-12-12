@@ -1,0 +1,13 @@
+Copy the files under the "Base image" directories under the "data/TunHorseDB2015" into a new directory called data/horsefacebase.
+
+Copy only the files with a first letter F in their filename.
+
+Give each file copy a unique name, following this convention:
+if the original file is in directory "PartP/Base image/D" and it is named "FN.jpg",
+copy it to "data/horsefacebase/PartP_BaseD_FN.jpg", where P, D and N are integers, expressed with a total of 2 digits, padded with leading zeros if necessary (e.g., 01, 02, ..., 10, 11, ..., 99).
+
+Ensure that the new directory "data/horsefacebase" is created if it does not already exist.
+
+Do not alter in any way the contents or the names of the files being copied.
+
+Write a Python script, called xbasefaces.py to automate this file copying and renaming process and then execute it.

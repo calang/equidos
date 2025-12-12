@@ -56,6 +56,10 @@ rm-env:
 coding-standards:	../common/coding-standards
 	cp -R ../common/coding-standards .
 
+# target: horsefacebase - create data/horsefacebase directory from TunHorseDB2015
+data/horsefacebase:	data/TunHorseDB2015 src/scripts/xbasefaces.py
+	python src/scripts/xbasefaces.py
+
 # target: jupl - start jupiter lab server
 jupl:	ALWAYS
 	@${TF_SETENV}; jupyter lab &
