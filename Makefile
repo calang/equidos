@@ -60,6 +60,10 @@ coding-standards:	../common/coding-standards
 data/horsefacebase:	data/TunHorseDB2015 src/scripts/xbasefaces.py
 	python src/scripts/xbasefaces.py
 
+# target: horsefacecrop - create data/horsefacecrop directory from data/horsefacebase
+data/horsefacecrop:	data/horsefacebase src/scripts/xcropfaces.py
+	python src/scripts/xcropfaces.py 2>&1 | tee src/scripts/xcropfaces.log
+
 # target: jupl - start jupiter lab server
 jupl:	ALWAYS
 	@${TF_SETENV}; jupyter lab &

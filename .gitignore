@@ -6,3 +6,4 @@ __pycache__/
 data/TunHorseDB2015
 data/horsefacebase
 data/horsefacecrop
+*.log

@@ -7,9 +7,12 @@ under data/TunHorseDB2015 into a new directory called data/horsefacebase,
 following a specific naming convention.
 """
 
-import os
+import logging
 import shutil
 from pathlib import Path
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -21,7 +24,7 @@ def main():
 
     # Create destination directory if it doesn't exist
     dest_dir.mkdir(parents=True, exist_ok=True)
-    print(f"Created/verified destination directory: {dest_dir}")
+    logger.info(f"Created/verified destination directory: {dest_dir}")
 
     copied_count = 0
 
@@ -63,7 +66,7 @@ def main():
                     file_num = int(file_num_str)
                 except ValueError:
                     # If the filename after 'F' is not a number, skip
-                    print(f"Skipping {original_filename}: cannot parse number")
+                    logger.warning(f"Skipping {original_filename}: cannot parse number")
                     continue
 
                 # Create new filename following the convention:
@@ -74,9 +77,9 @@ def main():
                 # Copy the file
                 shutil.copy2(file_path, dest_path)
                 copied_count += 1
-                print(f"Copied: {file_path.relative_to(base_dir)} -> {dest_path.relative_to(base_dir)}")
+                logger.info(f"Copied: {file_path.relative_to(base_dir)} -> {dest_path.relative_to(base_dir)}")
 
-    print(f"\nTotal files copied: {copied_count}")
+    logger.info(f"Total files copied: {copied_count}")
 
 
 if __name__ == "__main__":
