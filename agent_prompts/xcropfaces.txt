@@ -1,0 +1,10 @@
+Create a Python script called `src/scripts/xcropfaces.py` that uses logic similar to the one used in src/sandbag/try_face.py to detect and crop horse faces from an input image.
+
+For each image file in the `data/horsefacebase` directory, the script should detect the horse face, crop it, and save the cropped face to a new file in the `data/horsefacecrop` directory.
+
+Create the `data/horsefacecrop` directory if it does not exist.
+
+The saved cropped face should have a name similar to the original file name, but changing the substring "base" to "crop".
+
+A warning message should be logged when no horse face is detected in an image.
+No messages should be logged when a horse face is successfully detected and cropped.
