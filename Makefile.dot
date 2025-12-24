@@ -1,0 +1,42 @@
+digraph {
+    label="Dependency Chart
+- the origin is used to produce the destination -
+
+"
+    labelloc="t"
+    rankdir="LR"
+    splines=line
+
+#help:
+    "help" [color = "blue"]
+#data/horsefacebase: data/TunHorseDB2015 src/scripts/xbasefaces.py
+    "data/horsefacebase" [color = "blue"]
+    "data/TunHorseDB2015" [color = "blue"]
+    "data/TunHorseDB2015" -> "data/horsefacebase"
+    "src/scripts/xbasefaces.py" [color = "green"]
+    "src/scripts/xbasefaces.py" -> "data/horsefacebase"
+#data/horsefacecrop: data/horsefacebase src/scripts/xcropfaces.py
+    "data/horsefacecrop" [color = "blue"]
+    "data/horsefacebase" [color = "blue"]
+    "data/horsefacebase" -> "data/horsefacecrop"
+    "src/scripts/xcropfaces.py" [color = "green"]
+    "src/scripts/xcropfaces.py" -> "data/horsefacecrop"
+#data/THGtraining data/THGvalidation data/THGtest &: data/TunHorseDB2015G src/scripts/prep_data.py
+    "data/THGtraining" [color = "blue"]
+    "data/TunHorseDB2015G" [color = "blue"]
+    "data/TunHorseDB2015G" -> "data/THGtraining"
+    "src/scripts/prep_data.py" [color = "green"]
+    "src/scripts/prep_data.py" -> "data/THGtraining"
+    "data/THGvalidation" [color = "blue"]
+    "data/TunHorseDB2015G" -> "data/THGvalidation"
+    "src/scripts/prep_data.py" -> "data/THGvalidation"
+    "data/THGtest" [color = "blue"]
+    "data/TunHorseDB2015G" -> "data/THGtest"
+    "src/scripts/prep_data.py" -> "data/THGtest"
+#jupl: ALWAYS
+    "jupl" [color = "blue"]
+    "ALWAYS" [color = "blue"]
+    "ALWAYS" -> "jupl"
+#ALWAYS:
+    "ALWAYS" [color = "blue"]
+}

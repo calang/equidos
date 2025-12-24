@@ -64,6 +64,12 @@ data/horsefacebase:	data/TunHorseDB2015 src/scripts/xbasefaces.py
 data/horsefacecrop:	data/horsefacebase src/scripts/xcropfaces.py
 	python src/scripts/xcropfaces.py 2>&1 | tee src/scripts/xcropfaces.log
 
+# target: prep-data - split TunHorseDB2015G into training, validation and test sets
+prep-data:	data/THGtraining data/THGvalidation data/THGtest
+
+data/THGtraining data/THGvalidation data/THGtest &: data/TunHorseDB2015G src/scripts/prep_data.py
+	python src/scripts/prep_data.py
+
 # target: jupl - start jupiter lab server
 jupl:	ALWAYS
 	@${TF_SETENV}; jupyter lab &

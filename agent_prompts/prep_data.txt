@@ -1,0 +1,2 @@
+write a Python script, to be stored in src/scripts/prep_data.py that will take the file under data/TunHorseDB2015G and split them as prescribed for the Prepare data step.
+store the split files under directories data/THGtranining, data/THGvalidation, data/THGtest.
