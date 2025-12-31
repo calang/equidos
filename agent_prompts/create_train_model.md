@@ -205,4 +205,4 @@ All scripts are ready to run with the existing conda environment!
 
 **Status:** ✅ Complete and ready for training!
 
-Run `./src/scripts/quickstart.py` to see the current workflow status and next steps.
+Run `./experiments/ResNet50-47/quickstart.py` to see the current workflow status and next steps.

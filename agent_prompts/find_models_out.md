@@ -40,7 +40,7 @@ Since a "plug-and-play" model for specific horse ID is rare, the standard soluti
     - Model: A Vision Transformer (ViT) or ResNet fine-tuned using a library like pytorch-metric-learning.
 
 Example: Using OWL-ViT to find horse faces
-You can try this code to see if you can isolate the face first: `scripts/sandbag/try_face.py`
+You can try this code to see if you can isolate the face first: `src/sandbag/try_face.py`
 
 Note: execution output:
 

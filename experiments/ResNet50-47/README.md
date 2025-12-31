@@ -19,23 +19,52 @@ after training completion.
 - **Batch Size**: 32
 - **Learning Rate**: 0.001
 - **Learning Rate Decay**: Reduced by a factor of 10 every 15 epochs
-- Optimizer**: Adam
+- **Optimizer**: Adam
 - **Loss Function**: Cross-Entropy Loss
 - **Device**: Utilizes GPU if available for faster training
 - **Logging**: Comprehensive logging of training progress and metrics
 - **Model Saving**: Saves model state, performance metrics, and training history
-- **Directory Structure**:
-  - `data/THGtraining/`: Training set (70% of images)
-  - `data/THGvalidation/`: Validation set (15% of images)
-  - `data/THGtest/`: Test set (15% of images)
-  - `models/`: Directory where trained models are saved
-  - `logs/`: Directory for training logs
-  - `train_model.py`: Script for training the model
-  - `src/models/resnet_model.py`: Model architecture definition
-  - `src/utils/data_utils.py`: Data loading and augmentation utilities
-  - `src/utils/train_utils.py`: Training and evaluation utilities
-  - `src/utils/logger.py`: Logging utilities
-  - `src/utils/save_utils.py`: Model saving and loading utilities
-  - `src/utils/config.py`: Configuration parameters
-  - `src/visualize/plot_training.py`: Script for visualizing training progress
-  - `src/predict/predict.py`: Script for making predictions with the trained model
+
+## Scripts in this Directory
+
+- `train_model.py` - Script for training the model
+- `predict.py` - Script for making predictions with the trained model
+- `visualize_training.py` - Script for visualizing training progress
+- `quickstart.py` - Interactive workflow guide
+- `README.md` - This file
+
+## Data Directory Structure
+
+- `data/THGtraining/` - Training set (70% of images)
+- `data/THGvalidation/` - Validation set (15% of images)
+- `data/THGtest/` - Test set (15% of images)
+- `models/` - Directory where trained models are saved
+
+## Usage
+
+See the README.md in each script or run with `--help` for detailed usage instructions.
+
+**Train the model:**
+```bash
+./experiments/ResNet50-47/train_model.py
+```
+
+**Make predictions:**
+```bash
+./experiments/ResNet50-47/predict.py <image_path>
+```
+
+**Visualize training:**
+```bash
+./experiments/ResNet50-47/visualize_training.py --plot
+```
+
+**Quick start guide:**
+```bash
+./experiments/ResNet50-47/quickstart.py
+```
+
+## References
+
+- ResNet: [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+- Transfer Learning: [PyTorch Transfer Learning Tutorial](https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html)
