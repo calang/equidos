@@ -76,9 +76,9 @@ def main():
     if not model_trained:
         logger.info("\nSTEP 2: Train Model")
         logger.info("  Run the training script:")
-        logger.info("  $ ./src/scripts/train_model.py")
+        logger.info("  $ ./experiments/ResNet50-47/train_model.py")
         logger.info("  or")
-        logger.info("  $ python src/scripts/train_model.py")
+        logger.info("  $ python experiments/ResNet50-47/train_model.py")
         logger.info("\n  Note: Training may take several hours depending on:")
         logger.info("  - Hardware (GPU recommended)")
         logger.info("  - Dataset size")
@@ -89,16 +89,16 @@ def main():
     # Step 3
     logger.info("\nSTEP 3: Visualize Training Results (optional)")
     logger.info("  View training metrics and plots:")
-    logger.info("  $ ./src/scripts/visualize_training.py --plot")
+    logger.info("  $ ./experiments/ResNet50-47/visualize_training.py --plot")
     logger.info("  or save plots:")
-    logger.info("  $ ./src/scripts/visualize_training.py --save-plot results.png")
+    logger.info("  $ ./experiments/ResNet50-47/visualize_training.py --save-plot results.png")
 
     # Step 4
     logger.info("\nSTEP 4: Make Predictions")
     logger.info("  Test the model on new images:")
-    logger.info("  $ ./src/scripts/predict.py <image_path>")
+    logger.info("  $ ./experiments/ResNet50-47/predict.py <image_path>")
     logger.info("  Example:")
-    logger.info("  $ ./src/scripts/predict.py data/horsefacecrop/Part01_Base01_F01.jpg")
+    logger.info("  $ ./experiments/ResNet50-47/predict.py data/horsefacecrop/Part01_Base01_F01.jpg")
 
     # Summary
     logger.info("\n" + "=" * 70)
