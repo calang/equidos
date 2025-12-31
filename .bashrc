@@ -30,8 +30,14 @@ export CONDA_ENV_NAME=$(head -1 env.yml | cut -d ' ' -f 2)
 
 conda activate $CONDA_ENV_NAME
 
-# set CUDA and TF variables (duplicating Makefile definitions, for now)
+# Set CUDA and TensorFlow variables for GPU support
+# These should be set after activating the conda environment
 export CUDA_DIR=${CONDA_PREFIX}
 export XLA_FLAGS="--xla_gpu_cuda_data_dir=${CUDA_DIR}"
+export LD_LIBRARY_PATH=${CUDA_DIR}/lib:${LD_LIBRARY_PATH}
 export TF_ENABLE_ONEDNN_OPTS=0
-export TF_SETENV="export CUDA_DIR=${CUDA_DIR} XLA_FLAGS=${XLA_FLAGS} TF_ENABLE_ONEDNN_OPTS=${TF_ENABLE_ONEDNN_OPTS}"
+
+# Note: NVIDIA drivers must be installed on the system
+# Check with: nvidia-smi
+# Install with: sudo ubuntu-drivers autoinstall (Ubuntu/Debian)
+

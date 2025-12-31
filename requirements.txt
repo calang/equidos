@@ -1,0 +1,29 @@
+# Python package requirements
+# Most packages are managed through conda (see env.yml)
+# Add pip-only packages here if needed
+
+# TensorFlow - install via pip for better GPU support
+# Note: TensorFlow 2.16+ automatically includes CUDA support if compatible NVIDIA drivers are present
+tensorflow>=2.16,<2.21
+
+# All packages below are managed via conda in env.yml
+# Uncomment and modify only if you need to install via pip instead:
+# tensorflow==2.15.0
+# torch
+# torchvision
+# torchaudio
+# transformers
+# pillow
+# pandas
+# jupyterlab
+# ipympl
+# ipywidgets
+# pytest
+# pylint
+
+# Note: These packages do NOT exist in pip with these names:
+# - pytorch (use 'torch' instead)
+# - pytorch-cuda (CUDA support comes with torch installation)
+# - cuda-toolkit (system/conda only)
+# - cuda-nvcc (system/conda only)
+# - cudnn (system/conda only)
