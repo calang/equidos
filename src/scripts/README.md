@@ -108,32 +108,6 @@ For model training, prediction, and visualization scripts, see:
 
 ---
 
-## Workflow
-
-The typical data preparation workflow is:
-
-1. **Extract base faces** (if needed):
-   ```bash
-   python src/scripts/xbasefaces.py
-   ```
-
-2. **Crop faces** (if needed):
-   ```bash
-   python src/scripts/xcropfaces.py
-   ```
-
-3. **Split data for training**:
-   ```bash
-   python src/scripts/prep_data.py
-   ```
-
-4. **Train model** (see experiments/ResNet50-47/):
-   ```bash
-   python experiments/ResNet50-47/train_model.py
-   ```
-
----
-
 ## Requirements
 
 Python packages (see `env.yml`):
