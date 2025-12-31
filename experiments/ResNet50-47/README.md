@@ -30,7 +30,7 @@ after training completion.
   - `data/THGtest/`: Test set (15% of images)
   - `models/`: Directory where trained models are saved
   - `logs/`: Directory for training logs
-  - `src/scripts/train_model.py`: Script for training the model
+  - `train_model.py`: Script for training the model
   - `src/models/resnet_model.py`: Model architecture definition
   - `src/utils/data_utils.py`: Data loading and augmentation utilities
   - `src/utils/train_utils.py`: Training and evaluation utilities
