@@ -25,7 +25,7 @@ Ensure the data has been prepared by running `prep_data.py` first. This will cre
 
 #### Usage
 ```bash
-./src/scripts/train_model.py
+./src/scripts/train_model.py 2>&1 | tee experiments/ResNet50-47/train_model_$(date +%Y%m%d_%H%M%S).log
 ```
 
 Or with Python:
