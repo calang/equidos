@@ -33,6 +33,21 @@ digraph {
     "data/THGtest" [color = "blue"]
     "data/TunHorseDB2015G" -> "data/THGtest"
     "src/scripts/prep_data.py" -> "data/THGtest"
+#models/best_model.pth models/final_model.pth &: data/THGtraining data/THGvalidation data/THGtest experiments/ResNet50-47/train_model.py
+    "models/best_model.pth" [color = "blue"]
+    "data/THGtraining" [color = "blue"]
+    "data/THGtraining" -> "models/best_model.pth"
+    "data/THGvalidation" [color = "blue"]
+    "data/THGvalidation" -> "models/best_model.pth"
+    "data/THGtest" [color = "blue"]
+    "data/THGtest" -> "models/best_model.pth"
+    "experiments/ResNet50-47/train_model.py" [color = "green"]
+    "experiments/ResNet50-47/train_model.py" -> "models/best_model.pth"
+    "models/final_model.pth" [color = "blue"]
+    "data/THGtraining" -> "models/final_model.pth"
+    "data/THGvalidation" -> "models/final_model.pth"
+    "data/THGtest" -> "models/final_model.pth"
+    "experiments/ResNet50-47/train_model.py" -> "models/final_model.pth"
 #jupl: ALWAYS
     "jupl" [color = "blue"]
     "ALWAYS" [color = "blue"]

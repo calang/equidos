@@ -4,9 +4,9 @@ This directory contains various experiments and prototypes related to the main p
 
 ## ResNet50
 
-Experiment description downloaded from internet, as a propossed exercise.
+Experiment description downloaded from internet, as a proposed exercise.
 
-## ResNet50-4
+## ResNet50-47
 
-Experiment created for our project.
+Experiment created for our project to train a model for identifying 47 individual equids using transfer learning with ResNet50 backbone.
 

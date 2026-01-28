@@ -1,8 +1,11 @@
 # References
+
 ## [EQUiD — Biometric Horse Identity Verification](https://tuul.ai/our-work/equid-horse-identification)
 December 10, 2024
 
 ## [Multiview horses’ faces database](https://learningnetwork.ictforag.com/resources/multiview-horses-rsquo-faces-database)
+The Tunisian Horses DataBase of Regim Lab’2015 (THoDBRL’2015) is a multiview horses’ faces database, which is created in March 2015. Images of 47 horses’ faces were captured from four equestrian centers in Sfax (a south town in Tunisia) during 3 days in daylight. The size of the database is 4.67Go and contains 2820 images.
+
 ## [Thodbrl2015-database](https://ieee-dataport.org/open-access/thodbrl2015-database)
 Animal recognition is an active research topic in recent years. Horse’s recognition is an important task in the world and  in  order  to  promote  horse’s  recognition  research,  the  Tunisian  Research  Groups  in  Intelligent  Machines  of University of Sfax (REGIM of Sfax) will provide the Tunisian Horses DataBase of Regim Lab’2015 (THoDBRL’2015) freely of charge to mainly horses’ face recognition researchers and to increase total of researches done to enhance animal recognition. This Database is used in [1]. The main objective of the construction of this database is to identify horses keeping its natural behavior without any direct contact between the animal and the camera.
 

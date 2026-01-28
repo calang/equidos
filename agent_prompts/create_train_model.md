@@ -36,7 +36,7 @@ Prediction script that:
 
 **Usage:**
 ```bash
-./src/scripts/predict.py <image_path> [--model models/best_model.pth] [--show-embedding]
+./experiments/ResNet50-47/predict.py <image_path> [--model models/best_model.pth] [--show-embedding]
 ```
 
 ### 3. **visualize_training.py** (5.9 KB)
@@ -48,7 +48,7 @@ Visualization tool that:
 
 **Usage:**
 ```bash
-./src/scripts/visualize_training.py [--plot] [--save-plot output.png]
+./experiments/ResNet50-47/visualize_training.py [--plot] [--save-plot output.png]
 ```
 
 ### 4. **quickstart.py** (4.5 KB)
@@ -60,7 +60,7 @@ Interactive workflow guide that:
 
 **Usage:**
 ```bash
-./src/scripts/quickstart.py
+./experiments/ResNet50-47/quickstart.py
 ```
 
 ### 5. **README.md** (Complete Documentation)
@@ -106,7 +106,7 @@ The current workflow status shows:
 
 1. **Train the model:**
    ```bash
-   ./src/scripts/train_model.py
+   ./experiments/ResNet50-47/train_model.py
    ```
    This will take several hours with GPU (much longer with CPU).
 
@@ -119,12 +119,12 @@ The current workflow status shows:
 
 3. **Visualize results:**
    ```bash
-   ./src/scripts/visualize_training.py --plot
+   ./experiments/ResNet50-47/visualize_training.py --plot
    ```
 
 4. **Make predictions:**
    ```bash
-   ./src/scripts/predict.py data/horsefacecrop/Part01_Base01_F01.jpg
+   ./experiments/ResNet50-47/predict.py data/horsefacecrop/Part01_Base01_F01.jpg
    ```
 
 ## 📊 Training Configuration

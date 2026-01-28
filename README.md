@@ -58,7 +58,7 @@ make update-env
 This project uses AI coding agents to assist in code generation, debugging, and documentation.
 
 ### Files
-- `agents.ms`: base instructions for all AI coding agents, directing to all other relevant files.
+- `agents.md`: base instructions for all AI coding agents, directing to all other relevant files.
 - `agent_prompts/`: This directory contains the prompts used with AI coding agents. Each prompt is documented with its purpose and context.
 - `agent_references/`: references and resources used to generate code, data files or documentation.
-- `coding-standads/`: coding standards and best practices followed in this project.
+- `coding-standards/`: coding standards and best practices followed in this project.
