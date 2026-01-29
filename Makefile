@@ -69,6 +69,12 @@ prep-data:	data/THGtraining data/THGvalidation data/THGtest
 data/THGtraining data/THGvalidation data/THGtest &: data/TunHorseDB2015G src/scripts/prep_data.py
 	python src/scripts/prep_data.py
 
+# target: resnet50-47-models - train ResNet50-47 model and produce best_model.pth and final_model.pth
+resnet50-47-models:	models/best_model.pth models/final_model.pth
+
+models/best_model.pth models/final_model.pth &: data/THGtraining data/THGvalidation data/THGtest experiments/ResNet50-47/train_model.py
+	python experiments/ResNet50-47/train_model.py
+
 # target: jupl - start jupiter lab server
 jupl:	ALWAYS
 	@${TF_SETENV}; jupyter lab &
