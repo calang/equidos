@@ -7,6 +7,7 @@ adds classification layers, and trains it on the prepared dataset to identify
 individual equids from face images.
 """
 
+import argparse
 import logging
 import os
 import time
@@ -110,7 +111,7 @@ class EquidIdentificationModel(nn.Module):
         return embeddings
 
 
-def get_data_loaders(batch_size: int) -> Tuple[DataLoader, DataLoader, DataLoader, int]:
+def get_data_loaders(batch_size: int) -> Tuple[DataLoader, DataLoader, DataLoader, int, list[str]]:
     """
     Create data loaders for training, validation, and testing.
 
@@ -118,7 +119,7 @@ def get_data_loaders(batch_size: int) -> Tuple[DataLoader, DataLoader, DataLoade
         batch_size: Batch size for data loaders
 
     Returns:
-        Tuple of (train_loader, val_loader, test_loader, num_classes)
+        Tuple of (train_loader, val_loader, test_loader, num_classes, class_names)
     """
     # Data transforms
     train_transform = transforms.Compose([
@@ -167,13 +168,14 @@ def get_data_loaders(batch_size: int) -> Tuple[DataLoader, DataLoader, DataLoade
     )
 
     num_classes = len(train_dataset.classes)
+    class_names = train_dataset.classes
     logger.info(f"Number of classes (individual equids): {num_classes}")
-    logger.info(f"Class names: {train_dataset.classes}")
+    logger.info(f"Class names: {class_names}")
     logger.info(f"Training samples: {len(train_dataset)}")
     logger.info(f"Validation samples: {len(val_dataset)}")
     logger.info(f"Test samples: {len(test_dataset)}")
 
-    return train_loader, val_loader, test_loader, num_classes
+    return train_loader, val_loader, test_loader, num_classes, class_names
 
 
 def train_epoch(model: nn.Module,
@@ -272,9 +274,12 @@ def validate(model: nn.Module,
     return val_loss, val_acc
 
 
-def train_model() -> None:
+def train_model(num_epochs: int = NUM_EPOCHS) -> None:
     """
     Main function to train the equid identification model.
+
+    Args:
+        num_epochs: Number of training epochs (default: 50)
     """
     # Set random seed for reproducibility
     torch.manual_seed(RANDOM_SEED)
@@ -294,7 +299,7 @@ def train_model() -> None:
 
     # Load data
     logger.info("Loading data...")
-    train_loader, val_loader, test_loader, num_classes = get_data_loaders(BATCH_SIZE)
+    train_loader, val_loader, test_loader, num_classes, class_names = get_data_loaders(BATCH_SIZE)
 
     # Create model
     logger.info("Creating model...")
@@ -311,6 +316,7 @@ def train_model() -> None:
     # Training loop
     logger.info("=" * 60)
     logger.info("Starting training...")
+    logger.info(f"Number of epochs: {num_epochs}")
     logger.info("=" * 60)
 
     best_val_acc = 0.0
@@ -324,7 +330,7 @@ def train_model() -> None:
 
     start_time = time.time()
 
-    for epoch in range(NUM_EPOCHS):
+    for epoch in range(num_epochs):
         epoch_start = time.time()
 
         # Train for one epoch
@@ -348,7 +354,7 @@ def train_model() -> None:
 
         # Log progress
         logger.info(
-            f"Epoch [{epoch + 1}/{NUM_EPOCHS}] "
+            f"Epoch [{epoch + 1}/{num_epochs}] "
             f"Train Loss: {train_loss:.4f} Train Acc: {train_acc:.2f}% "
             f"Val Loss: {val_loss:.4f} Val Acc: {val_acc:.2f}% "
             f"Time: {epoch_time:.2f}s"
@@ -364,7 +370,8 @@ def train_model() -> None:
                 'val_acc': val_acc,
                 'val_loss': val_loss,
                 'num_classes': num_classes,
-                'embedding_dim': EMBEDDING_DIM
+                'embedding_dim': EMBEDDING_DIM,
+                'class_names': class_names
             }, best_model_path)
             logger.info(f"  → Saved best model with validation accuracy: {val_acc:.2f}%")
 
@@ -394,13 +401,31 @@ def train_model() -> None:
         'embedding_dim': EMBEDDING_DIM,
         'test_acc': test_acc,
         'test_loss': test_loss,
-        'training_history': training_history
+        'training_history': training_history,
+        'class_names': class_names
     }, final_model_path)
     logger.info(f"Saved final model to: {final_model_path}")
 
     logger.info("=" * 60)
 
 
-if __name__ == "__main__":
-    train_model()
+def main():
+    """Parse arguments and start training."""
+    parser = argparse.ArgumentParser(
+        description='Train equid identification model using transfer learning'
+    )
+    parser.add_argument(
+        '--epochs',
+        type=int,
+        default=50,
+        help='Number of training epochs (default: 50)'
+    )
 
+    args = parser.parse_args()
+
+    # Start training
+    train_model(num_epochs=args.epochs)
+
+
+if __name__ == "__main__":
+    main()

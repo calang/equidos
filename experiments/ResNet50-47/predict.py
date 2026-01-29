@@ -199,6 +199,9 @@ def main():
     # Load model
     model, metadata = load_model(model_path, device)
 
+    # Get class names if available
+    class_names = metadata.get('class_names', None)
+
     # Preprocess image
     logger.info(f"Processing image: {image_path}")
     image_tensor = preprocess_image(image_path)
@@ -211,6 +214,8 @@ def main():
     logger.info("PREDICTION RESULTS")
     logger.info("=" * 60)
     logger.info(f"Predicted Class ID: {predicted_class}")
+    if class_names and predicted_class < len(class_names):
+        logger.info(f"Predicted Class Name: {class_names[predicted_class]}")
     logger.info(f"Confidence: {confidence * 100:.2f}%")
 
     if args.show_embedding:

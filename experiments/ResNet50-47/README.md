@@ -28,6 +28,7 @@ after training completion.
 ## Scripts in this Directory
 
 - `train_model.py` - Script for training the model
+- `test_model.py` - Script for evaluating model performance on the test dataset
 - `predict.py` - Script for making predictions with the trained model
 - `visualize_training.py` - Script for visualizing training progress
 - `quickstart.py` - Interactive workflow guide
@@ -47,6 +48,13 @@ See the README.md in each script or run with `--help` for detailed usage instruc
 **Train the model:**
 ```bash
 ./experiments/ResNet50-47/train_model.py
+```
+
+**Evaluate on test set:**
+```bash
+./experiments/ResNet50-47/test_model.py
+# or with custom options:
+./experiments/ResNet50-47/test_model.py --test-dir data/THGtest --output results.csv
 ```
 
 **Make predictions:**

@@ -94,7 +94,14 @@ def main():
     logger.info("  $ ./experiments/ResNet50-47/visualize_training.py --save-plot results.png")
 
     # Step 4
-    logger.info("\nSTEP 4: Make Predictions")
+    logger.info("\nSTEP 4: Evaluate Model on Test Set")
+    logger.info("  Run the test script to evaluate on all test images:")
+    logger.info("  $ ./experiments/ResNet50-47/test_model.py")
+    logger.info("  or with custom paths:")
+    logger.info("  $ ./experiments/ResNet50-47/test_model.py --test-dir data/THGtest --output experiments/ResNet50-47/test_results.csv")
+
+    # Step 5
+    logger.info("\nSTEP 5: Make Predictions on Individual Images")
     logger.info("  Test the model on new images:")
     logger.info("  $ ./experiments/ResNet50-47/predict.py <image_path>")
     logger.info("  Example:")
@@ -113,6 +120,7 @@ def main():
         logger.info("→ Next step: Run train_model.py to train the model")
     else:
         logger.info("✓ All steps complete! You can now:")
+        logger.info("  - Evaluate on test set with test_model.py")
         logger.info("  - Make predictions with predict.py")
         logger.info("  - Visualize results with visualize_training.py")
         logger.info("  - Experiment with different hyperparameters")
