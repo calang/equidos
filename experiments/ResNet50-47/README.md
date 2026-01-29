@@ -72,6 +72,8 @@ See the README.md in each script or run with `--help` for detailed usage instruc
 ./experiments/ResNet50-47/quickstart.py
 ```
 
+**Or**, use rules in the main `Makefile`
+
 ## References
 
 - ResNet: [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
