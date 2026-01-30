@@ -52,8 +52,8 @@ rm-env:
 # 	pip install --upgrade -r requirements.txt
 
 # target: coding-standards - coding instructions for agents
-coding-standards:	../common/coding-standards
-	cp -R ../common/coding-standards .
+coding-standards:	../common/coding-standards/python
+	cp -R ../common/coding-standards/python .
 
 # target: horsefacebase - create data/horsefacebase directory from TunHorseDB2015
 data/horsefacebase:	data/TunHorseDB2015 src/scripts/xbasefaces.py
