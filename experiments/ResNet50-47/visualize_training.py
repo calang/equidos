@@ -149,8 +149,8 @@ def display_training_summary(history: dict) -> None:
 def main():
     """Main function to visualize model training."""
     parser = argparse.ArgumentParser(description='Visualize training history and model performance')
-    parser.add_argument('--model', type=str, default='models/final_model.pth',
-                        help='Path to the model file (default: models/final_model.pth)')
+    parser.add_argument('--model', type=str, default='experiments/ResNet50-47/models/final_model.pth',
+                        help='Path to the model file (default: experiments/ResNet50-47/models/final_model.pth)')
     parser.add_argument('--plot', action='store_true',
                         help='Show training plots')
     parser.add_argument('--save-plot', type=str,

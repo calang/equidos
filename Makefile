@@ -70,22 +70,22 @@ data/THGtraining data/THGvalidation data/THGtest &: data/TunHorseDB2015G src/scr
 	python src/scripts/prep_data.py
 
 # target: resnet50-47-models - train ResNet50-47 model and produce best_model.pth and final_model.pth
-resnet50-47-models:	models/best_model.pth models/final_model.pth
+resnet50-47-models:	experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth
 
-models/best_model.pth models/final_model.pth &: data/THGtraining data/THGvalidation data/THGtest experiments/ResNet50-47/train_model.py
+experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth &: data/THGtraining data/THGvalidation data/THGtest experiments/ResNet50-47/train_model.py
 	experiments/ResNet50-47/train_model.py --epochs 20
 
 # target: resnet50-47-training_history - plot training history of ResNet50-47 model
 resnet50-47-training_history:	experiments/ResNet50-47/training_history.png
 
-experiments/ResNet50-47/training_history.png &: models/best_model.pth models/final_model.pth experiments/ResNet50-47/visualize_training.py
+experiments/ResNet50-47/training_history.png &: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth experiments/ResNet50-47/visualize_training.py
 	./experiments/ResNet50-47/visualize_training.py --save-plot experiments/ResNet50-47/training_history.png
 
 # target: test_results - run test script and produce test_results.csv
 test_results:	experiments/ResNet50-47/test_results.csv
 
-experiments/ResNet50-47/test_results.csv:	models/best_model.pth experiments/ResNet50-47/test_model.py
-	./experiments/ResNet50-47/test_model.py --model models/best_model.pth --output experiments/ResNet50-47/test_results.csv
+experiments/ResNet50-47/test_results.csv:	experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/test_model.py
+	./experiments/ResNet50-47/test_model.py --model experiments/ResNet50-47/models/best_model.pth --output experiments/ResNet50-47/test_results.csv
 
 # target: jupl - start jupiter lab server
 jupl:	ALWAYS

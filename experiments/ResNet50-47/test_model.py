@@ -330,8 +330,8 @@ def main():
     parser.add_argument(
         '--model',
         type=str,
-        default='models/best_model.pth',
-        help='Path to model file (default: models/best_model.pth)'
+        default='experiments/ResNet50-47/models/best_model.pth',
+        help='Path to model file (default: experiments/ResNet50-47/models/best_model.pth)'
     )
     parser.add_argument(
         '--output',

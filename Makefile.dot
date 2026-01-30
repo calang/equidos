@@ -47,37 +47,37 @@ digraph {
     "src/scripts/prep_data.py" -> "data/THGvalidation"
     "data/TunHorseDB2015G" -> "data/THGtest"
     "src/scripts/prep_data.py" -> "data/THGtest"
-#resnet50-47-models: models/best_model.pth models/final_model.pth
+#resnet50-47-models: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth
     "resnet50-47-models" [color = "blue"]
-    "models/best_model.pth" [color = "blue"]
-    "models/best_model.pth" -> "resnet50-47-models"
-    "models/final_model.pth" [color = "blue"]
-    "models/final_model.pth" -> "resnet50-47-models"
-#models/best_model.pth models/final_model.pth &: data/THGtraining data/THGvalidation data/THGtest experiments/ResNet50-47/train_model.py
-    "data/THGtraining" -> "models/best_model.pth"
-    "data/THGvalidation" -> "models/best_model.pth"
-    "data/THGtest" -> "models/best_model.pth"
+    "experiments/ResNet50-47/models/best_model.pth" [color = "blue"]
+    "experiments/ResNet50-47/models/best_model.pth" -> "resnet50-47-models"
+    "experiments/ResNet50-47/models/final_model.pth" [color = "blue"]
+    "experiments/ResNet50-47/models/final_model.pth" -> "resnet50-47-models"
+#experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth &: data/THGtraining data/THGvalidation data/THGtest experiments/ResNet50-47/train_model.py
+    "data/THGtraining" -> "experiments/ResNet50-47/models/best_model.pth"
+    "data/THGvalidation" -> "experiments/ResNet50-47/models/best_model.pth"
+    "data/THGtest" -> "experiments/ResNet50-47/models/best_model.pth"
     "experiments/ResNet50-47/train_model.py" [color = "green"]
-    "experiments/ResNet50-47/train_model.py" -> "models/best_model.pth"
-    "data/THGtraining" -> "models/final_model.pth"
-    "data/THGvalidation" -> "models/final_model.pth"
-    "data/THGtest" -> "models/final_model.pth"
-    "experiments/ResNet50-47/train_model.py" -> "models/final_model.pth"
+    "experiments/ResNet50-47/train_model.py" -> "experiments/ResNet50-47/models/best_model.pth"
+    "data/THGtraining" -> "experiments/ResNet50-47/models/final_model.pth"
+    "data/THGvalidation" -> "experiments/ResNet50-47/models/final_model.pth"
+    "data/THGtest" -> "experiments/ResNet50-47/models/final_model.pth"
+    "experiments/ResNet50-47/train_model.py" -> "experiments/ResNet50-47/models/final_model.pth"
 #resnet50-47-training_history: experiments/ResNet50-47/training_history.png
     "resnet50-47-training_history" [color = "blue"]
     "experiments/ResNet50-47/training_history.png" [color = "blue"]
     "experiments/ResNet50-47/training_history.png" -> "resnet50-47-training_history"
-#experiments/ResNet50-47/training_history.png &: models/best_model.pth models/final_model.pth experiments/ResNet50-47/visualize_training.py
-    "models/best_model.pth" -> "experiments/ResNet50-47/training_history.png"
-    "models/final_model.pth" -> "experiments/ResNet50-47/training_history.png"
+#experiments/ResNet50-47/training_history.png &: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth experiments/ResNet50-47/visualize_training.py
+    "experiments/ResNet50-47/models/best_model.pth" -> "experiments/ResNet50-47/training_history.png"
+    "experiments/ResNet50-47/models/final_model.pth" -> "experiments/ResNet50-47/training_history.png"
     "experiments/ResNet50-47/visualize_training.py" [color = "green"]
     "experiments/ResNet50-47/visualize_training.py" -> "experiments/ResNet50-47/training_history.png"
 #test_results: experiments/ResNet50-47/test_results.csv
     "test_results" [color = "blue"]
     "experiments/ResNet50-47/test_results.csv" [color = "blue"]
     "experiments/ResNet50-47/test_results.csv" -> "test_results"
-#experiments/ResNet50-47/test_results.csv: models/best_model.pth experiments/ResNet50-47/test_model.py
-    "models/best_model.pth" -> "experiments/ResNet50-47/test_results.csv"
+#experiments/ResNet50-47/test_results.csv: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/test_model.py
+    "experiments/ResNet50-47/models/best_model.pth" -> "experiments/ResNet50-47/test_results.csv"
     "experiments/ResNet50-47/test_model.py" [color = "green"]
     "experiments/ResNet50-47/test_model.py" -> "experiments/ResNet50-47/test_results.csv"
 #jupl: ALWAYS

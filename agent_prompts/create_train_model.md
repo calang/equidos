@@ -36,7 +36,7 @@ Prediction script that:
 
 **Usage:**
 ```bash
-./experiments/ResNet50-47/predict.py <image_path> [--model models/best_model.pth] [--show-embedding]
+./experiments/ResNet50-47/predict.py <image_path> [--model experiments/ResNet50-47/models/best_model.pth] [--show-embedding]
 ```
 
 ### 3. **visualize_training.py** (5.9 KB)

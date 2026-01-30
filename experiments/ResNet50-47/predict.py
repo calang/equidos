@@ -173,8 +173,8 @@ def main():
     """Main function to make predictions."""
     parser = argparse.ArgumentParser(description='Make predictions with trained equid identification model')
     parser.add_argument('image_path', type=str, help='Path to the image file')
-    parser.add_argument('--model', type=str, default='models/best_model.pth',
-                        help='Path to the model file (default: models/best_model.pth)')
+    parser.add_argument('--model', type=str, default='experiments/ResNet50-47/models/best_model.pth',
+                        help='Path to the model file (default: experiments/ResNet50-47/models/best_model.pth)')
     parser.add_argument('--show-embedding', action='store_true',
                         help='Show the embedding vector')
 

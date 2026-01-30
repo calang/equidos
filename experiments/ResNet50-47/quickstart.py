@@ -52,8 +52,8 @@ def main():
     # Check trained models
     logger.info("\n3. Check Trained Models:")
     model_dir_exists = check_directory(Path("models"), "Models directory")
-    best_model_exists = check_file(Path("models/best_model.pth"), "Best model")
-    final_model_exists = check_file(Path("models/final_model.pth"), "Final model")
+    best_model_exists = check_file(Path("experiments/ResNet50-47/models/best_model.pth"), "Best model")
+    final_model_exists = check_file(Path("experiments/ResNet50-47/models/final_model.pth"), "Final model")
 
     model_trained = best_model_exists or final_model_exists
 
