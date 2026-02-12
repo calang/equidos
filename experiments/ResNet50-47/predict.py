@@ -104,13 +104,20 @@ def load_model(model_path: Path, device: torch.device) -> Tuple[nn.Module, dict]
         device: Device to load the model on
 
     Returns:
-        Tuple of (model, metadata)
+        Tuple of (model, metadata including normalization)
     """
     logger.info(f"Loading model from: {model_path}")
     checkpoint = torch.load(model_path, map_location=device)
 
     num_classes = checkpoint['num_classes']
     embedding_dim = checkpoint['embedding_dim']
+
+    # Get normalization values from checkpoint
+    normalization = checkpoint.get(
+        'normalization',
+        {'mean': [0.5, 0.5, 0.5], 'std': [0.5, 0.5, 0.5]}
+    )
+    logger.info(f"Normalization - Mean: {normalization['mean']}, Std: {normalization['std']}")
 
     model = EquidIdentificationModel(num_classes=num_classes, embedding_dim=embedding_dim)
     model.load_state_dict(checkpoint['model_state_dict'])
@@ -122,12 +129,14 @@ def load_model(model_path: Path, device: torch.device) -> Tuple[nn.Module, dict]
     return model, checkpoint
 
 
-def preprocess_image(image_path: Path) -> torch.Tensor:
+def preprocess_image(image_path: Path, mean: list, std: list) -> torch.Tensor:
     """
     Preprocess an image for model input.
 
     Args:
         image_path: Path to the image file
+        mean: Mean values for normalization (RGB)
+        std: Standard deviation values for normalization (RGB)
 
     Returns:
         Preprocessed image tensor
@@ -135,7 +144,7 @@ def preprocess_image(image_path: Path) -> torch.Tensor:
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize(mean, std)
     ])
 
     image = Image.open(image_path).convert('RGB')
@@ -199,12 +208,13 @@ def main():
     # Load model
     model, metadata = load_model(model_path, device)
 
-    # Get class names if available
+    # Get class names and normalization if available
     class_names = metadata.get('class_names', None)
+    normalization = metadata.get('normalization', {'mean': [0.5, 0.5, 0.5], 'std': [0.5, 0.5, 0.5]})
 
     # Preprocess image
     logger.info(f"Processing image: {image_path}")
-    image_tensor = preprocess_image(image_path)
+    image_tensor = preprocess_image(image_path, normalization['mean'], normalization['std'])
 
     # Make prediction
     predicted_class, confidence, embedding = predict(model, image_tensor, device)

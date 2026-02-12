@@ -2,22 +2,32 @@
 """
 Prepare data for training by splitting images into train, validation, and test sets.
 
-This script takes images from data/TunHorseDB2015G/Croped Images/ and splits them
+This script takes images from data/TunHorseDB2015F/Croped Images/ and splits them
 into three sets while ensuring that each individual equid (subdirectory) has images
 in all three sets with no overlap.
+
+This version works with TunHorseDB2015F which contains only front face images (fhr*).
 
 Split ratios:
 - Training: 70%
 - Validation: 15%
 - Testing: 15%
+
+Additionally, this script calculates the mean and standard deviation of the training
+images for normalization purposes and saves them to a JSON file.
 """
 
+import json
 import logging
-import os
 import random
 import shutil
 from pathlib import Path
 from typing import List, Tuple
+
+import torch
+from PIL import Image
+from torchvision import transforms
+from tqdm import tqdm
 
 # Setup logging
 logging.basicConfig(
@@ -27,16 +37,18 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Constants
-SOURCE_DIR = Path('data/TunHorseDB2015G/Croped Images')
-TRAIN_DIR = Path('data/THGtraining')
-VAL_DIR = Path('data/THGvalidation')
-TEST_DIR = Path('data/THGtest')
+SOURCE_DIR = Path('data/TunHorseDB2015F/Croped Images')
+TRAIN_DIR = Path('data/THFtraining')
+VAL_DIR = Path('data/THFvalidation')
+TEST_DIR = Path('data/THFtest')
+NORMALIZATION_FILE = Path('data/THFtraining/normalization.json')
 
 TRAIN_RATIO = 0.70
 VAL_RATIO = 0.15
 TEST_RATIO = 0.15
 
 RANDOM_SEED = 42
+IMAGE_SIZE = 224
 
 
 def get_image_files(directory: Path) -> List[Path]:
@@ -115,6 +127,112 @@ def copy_files(files: List[Path],
         shutil.copy2(file_path, dest_path)
 
 
+def get_all_image_files(directory: Path) -> List[Path]:
+    """
+    Recursively get all image files from a directory.
+
+    Args:
+        directory: Path to the directory containing images
+
+    Returns:
+        List of Path objects for image files
+    """
+    valid_extensions = {'.jpg', '.jpeg', '.png', '.bmp'}
+    image_files = []
+
+    for ext in valid_extensions:
+        image_files.extend(directory.rglob(f'*{ext}'))
+        image_files.extend(directory.rglob(f'*{ext.upper()}'))
+
+    return sorted(set(image_files))
+
+
+def calculate_normalization(image_dir: Path) -> Tuple[List[float], List[float]]:
+    """
+    Calculate the mean and standard deviation of all images in a directory.
+
+    Args:
+        image_dir: Path to the directory containing images
+
+    Returns:
+        Tuple of (mean, std) where each is a list of 3 floats for RGB channels
+    """
+    transform = transforms.Compose([
+        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        transforms.ToTensor()
+    ])
+
+    image_files = get_all_image_files(image_dir)
+    logger.info(f"Calculating normalization from {len(image_files)} images...")
+
+    if not image_files:
+        logger.error("No images found for normalization calculation!")
+        return [0.5, 0.5, 0.5], [0.5, 0.5, 0.5]
+
+    # Initialize accumulators
+    channel_sum = torch.zeros(3)
+    channel_sum_sq = torch.zeros(3)
+    pixel_count = 0
+
+    # First pass: calculate mean
+    for image_path in tqdm(image_files, desc="Calculating mean"):
+        try:
+            image = Image.open(image_path).convert('RGB')
+            tensor = transform(image)  # Shape: (3, H, W)
+
+            channel_sum += tensor.sum(dim=[1, 2])
+            pixel_count += tensor.shape[1] * tensor.shape[2]
+        except Exception as e:
+            logger.warning(f"Error processing {image_path}: {e}")
+
+    mean = channel_sum / pixel_count
+
+    # Second pass: calculate standard deviation
+    for image_path in tqdm(image_files, desc="Calculating std"):
+        try:
+            image = Image.open(image_path).convert('RGB')
+            tensor = transform(image)  # Shape: (3, H, W)
+
+            # Sum of squared differences from mean
+            for c in range(3):
+                channel_sum_sq[c] += ((tensor[c] - mean[c]) ** 2).sum()
+        except Exception as e:
+            logger.warning(f"Error processing {image_path}: {e}")
+
+    std = torch.sqrt(channel_sum_sq / pixel_count)
+
+    mean_list = [round(m, 4) for m in mean.tolist()]
+    std_list = [round(s, 4) for s in std.tolist()]
+
+    logger.info(f"Calculated mean: {mean_list}")
+    logger.info(f"Calculated std: {std_list}")
+
+    return mean_list, std_list
+
+
+def save_normalization(mean: List[float], std: List[float], output_path: Path) -> None:
+    """
+    Save normalization values to a JSON file.
+
+    Args:
+        mean: List of mean values for RGB channels
+        std: List of std values for RGB channels
+        output_path: Path to save the JSON file
+    """
+    normalization_data = {
+        'mean': mean,
+        'std': std,
+        'description': 'Normalization values calculated from training dataset'
+    }
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, 'w') as f:
+        json.dump(normalization_data, f, indent=2)
+
+    logger.info(f"Normalization values saved to: {output_path}")
+
+
 def prepare_data() -> None:
     """
     Main function to prepare and split data into train, validation, and test sets.
@@ -179,6 +297,12 @@ def prepare_data() -> None:
         total_val += len(val_files)
         total_test += len(test_files)
 
+    # Calculate normalization values from training set
+    logger.info("=" * 60)
+    logger.info("Calculating normalization values from training set...")
+    mean, std = calculate_normalization(TRAIN_DIR)
+    save_normalization(mean, std, NORMALIZATION_FILE)
+
     # Summary
     logger.info("=" * 60)
     logger.info("Data preparation completed successfully!")
@@ -186,6 +310,8 @@ def prepare_data() -> None:
     logger.info(f"Total validation images: {total_val}")
     logger.info(f"Total test images: {total_test}")
     logger.info(f"Total images: {total_train + total_val + total_test}")
+    logger.info(f"Normalization - Mean: {mean}")
+    logger.info(f"Normalization - Std: {std}")
     logger.info("=" * 60)
 
 

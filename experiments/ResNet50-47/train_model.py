@@ -8,11 +8,11 @@ individual equids from face images.
 """
 
 import argparse
+import json
 import logging
-import os
 import time
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 
 import torch
 import torch.nn as nn
@@ -31,6 +31,7 @@ logger = logging.getLogger(__name__)
 TRAIN_DIR = Path('data/THGtraining')
 VAL_DIR = Path('data/THGvalidation')
 TEST_DIR = Path('data/THGtest')
+NORMALIZATION_FILE = Path('data/THGtraining/normalization.json')
 MODEL_DIR = Path('models')
 EMBEDDING_DIM = 512
 BATCH_SIZE = 32
@@ -111,30 +112,61 @@ class EquidIdentificationModel(nn.Module):
         return embeddings
 
 
-def get_data_loaders(batch_size: int) -> Tuple[DataLoader, DataLoader, DataLoader, int, list[str]]:
+def load_normalization(normalization_file: Path) -> Tuple[List[float], List[float]]:
+    """
+    Load normalization values from JSON file.
+
+    Args:
+        normalization_file: Path to the normalization JSON file
+
+    Returns:
+        Tuple of (mean, std) lists
+
+    Raises:
+        FileNotFoundError: If normalization file doesn't exist
+    """
+    if not normalization_file.exists():
+        raise FileNotFoundError(
+            f"Normalization file not found: {normalization_file}\n"
+            "Please run prep_data.py first to prepare the data and calculate normalization values."
+        )
+
+    with open(normalization_file, 'r') as f:
+        data = json.load(f)
+
+    mean = data['mean']
+    std = data['std']
+    logger.info(f"Loaded normalization values - Mean: {mean}, Std: {std}")
+
+    return mean, std
+
+
+def get_data_loaders(batch_size: int, mean: List[float], std: List[float]) -> Tuple[DataLoader, DataLoader, DataLoader, int, list[str]]:
     """
     Create data loaders for training, validation, and testing.
 
     Args:
         batch_size: Batch size for data loaders
+        mean: Mean values for normalization (RGB)
+        std: Standard deviation values for normalization (RGB)
 
     Returns:
         Tuple of (train_loader, val_loader, test_loader, num_classes, class_names)
     """
-    # Data transforms
+    # Data transforms with loaded normalization values
     train_transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(10),
         transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize(mean, std)
     ])
 
     val_test_transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize(mean, std)
     ])
 
     # Load datasets
@@ -293,13 +325,17 @@ def train_model(num_epochs: int = NUM_EPOCHS) -> None:
     # Create model directory
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Load normalization values
+    logger.info("Loading normalization values...")
+    mean, std = load_normalization(NORMALIZATION_FILE)
+
     # Check for GPU availability
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
 
     # Load data
     logger.info("Loading data...")
-    train_loader, val_loader, test_loader, num_classes, class_names = get_data_loaders(BATCH_SIZE)
+    train_loader, val_loader, test_loader, num_classes, class_names = get_data_loaders(BATCH_SIZE, mean, std)
 
     # Create model
     logger.info("Creating model...")
@@ -371,7 +407,8 @@ def train_model(num_epochs: int = NUM_EPOCHS) -> None:
                 'val_loss': val_loss,
                 'num_classes': num_classes,
                 'embedding_dim': EMBEDDING_DIM,
-                'class_names': class_names
+                'class_names': class_names,
+                'normalization': {'mean': mean, 'std': std}
             }, best_model_path)
             logger.info(f"  → Saved best model with validation accuracy: {val_acc:.2f}%")
 
@@ -402,7 +439,8 @@ def train_model(num_epochs: int = NUM_EPOCHS) -> None:
         'test_acc': test_acc,
         'test_loss': test_loss,
         'training_history': training_history,
-        'class_names': class_names
+        'class_names': class_names,
+        'normalization': {'mean': mean, 'std': std}
     }, final_model_path)
     logger.info(f"Saved final model to: {final_model_path}")
 

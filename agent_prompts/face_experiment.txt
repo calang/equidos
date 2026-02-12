@@ -1,0 +1,10 @@
+Directory experiments/ResNet50-47 contains code and data to run an experiment with equid files in directory data/TunHorseDB2015G which have equid front, left and right face pictures.
+
+On the other hand, directory data/TunHorseDB2015F has a subset of those, with face pictures only.
+
+Create a new directory experiments/ResNet50-47F and copy the code from experiments/ResNet50-47 to it. Then modify the code to run the experiment with the data in data/TunHorseDB2015F instead of data/TunHorseDB2015G.
+
+Notice that src/scripts/prep_data.py contains a script to split the data into training, validation and testing sets, but it works specifically for data/TunHorseDB2015G.
+
+- move src/scripts/prep_data.py to experiments/ResNet50-47 to make it part of that experiment
+- create a new script prep_data.py in experiments/ResNet50-47F that works for data/TunHorseDB2015F. You can use the code from the original prep_data.py as a starting point, but you will need to modify it to work with the different directory structure and file naming conventions in data/TunHorseDB2015F.

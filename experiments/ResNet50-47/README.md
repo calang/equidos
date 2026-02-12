@@ -27,6 +27,7 @@ after training completion.
 
 ## Scripts in this Directory
 
+- `prep_data.py` - Script for preparing data (splitting into train/val/test sets)
 - `train_model.py` - Script for training the model
 - `test_model.py` - Script for evaluating model performance on the test dataset
 - `predict.py` - Script for making predictions with the trained model

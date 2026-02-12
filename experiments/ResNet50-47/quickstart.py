@@ -66,9 +66,9 @@ def main():
     if not data_prepared:
         logger.info("\nSTEP 1: Prepare Data")
         logger.info("  Run the data preparation script to split images:")
-        logger.info("  $ ./src/scripts/prep_data.py")
+        logger.info("  $ ./experiments/ResNet50-47/prep_data.py")
         logger.info("  or")
-        logger.info("  $ python src/scripts/prep_data.py")
+        logger.info("  $ python experiments/ResNet50-47/prep_data.py")
     else:
         logger.info("\n✓ STEP 1: Data already prepared")
 

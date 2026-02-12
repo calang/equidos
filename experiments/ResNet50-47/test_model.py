@@ -86,7 +86,7 @@ class EquidIdentificationModel(nn.Module):
 def load_model(
     model_path: Path,
     device: torch.device
-) -> Tuple[nn.Module, List[str]]:
+) -> Tuple[nn.Module, List[str], dict]:
     """
     Load a trained model from file.
 
@@ -95,7 +95,7 @@ def load_model(
         device: Device to load the model on
 
     Returns:
-        Tuple of (loaded model, class names list)
+        Tuple of (loaded model, class names list, normalization dict)
     """
     logger.info(f"Loading model from: {model_path}")
     checkpoint = torch.load(model_path, map_location=device)
@@ -105,6 +105,10 @@ def load_model(
     class_names = checkpoint.get(
         'class_names',
         [str(i) for i in range(num_classes)]
+    )
+    normalization = checkpoint.get(
+        'normalization',
+        {'mean': [0.5, 0.5, 0.5], 'std': [0.5, 0.5, 0.5]}
     )
 
     model = EquidIdentificationModel(
@@ -120,16 +124,19 @@ def load_model(
         f"embedding_dim: {embedding_dim})"
     )
     logger.info(f"Class names: {class_names}")
+    logger.info(f"Normalization - Mean: {normalization['mean']}, Std: {normalization['std']}")
 
-    return model, class_names
+    return model, class_names, normalization
 
 
-def preprocess_image(image_path: Path) -> torch.Tensor:
+def preprocess_image(image_path: Path, mean: List[float], std: List[float]) -> torch.Tensor:
     """
     Preprocess an image for model input.
 
     Args:
         image_path: Path to the image file
+        mean: Mean values for normalization (RGB)
+        std: Standard deviation values for normalization (RGB)
 
     Returns:
         Preprocessed image tensor
@@ -137,7 +144,7 @@ def preprocess_image(image_path: Path) -> torch.Tensor:
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize(mean, std)
     ])
 
     image = Image.open(image_path).convert('RGB')
@@ -209,7 +216,8 @@ def evaluate_model(
     model: nn.Module,
     test_images: List[Tuple[Path, int]],
     device: torch.device,
-    class_names: List[str]
+    class_names: List[str],
+    normalization: dict
 ) -> List[Dict]:
     """
     Evaluate the model on all test images.
@@ -219,16 +227,19 @@ def evaluate_model(
         test_images: List of (image_path, ground_truth) tuples
         device: Device to run inference on
         class_names: List of class names corresponding to class IDs
+        normalization: Dict with 'mean' and 'std' for image normalization
 
     Returns:
         List of result dictionaries
     """
     results = []
+    mean = normalization['mean']
+    std = normalization['std']
 
     for i, (image_path, ground_truth) in enumerate(test_images, 1):
         try:
             # Preprocess and predict
-            image_tensor = preprocess_image(image_path)
+            image_tensor = preprocess_image(image_path, mean, std)
             predicted_class, confidence = predict(model, image_tensor, device)
 
             # Get class name for prediction
@@ -364,7 +375,7 @@ def main():
     logger.info(f"Using device: {device}")
 
     # Load model
-    model, class_names = load_model(model_path, device)
+    model, class_names, normalization = load_model(model_path, device)
 
     # Collect test images
     test_images = collect_test_images(test_dir)
@@ -375,7 +386,7 @@ def main():
 
     # Run evaluation
     logger.info("Starting evaluation...")
-    results = evaluate_model(model, test_images, device, class_names)
+    results = evaluate_model(model, test_images, device, class_names, normalization)
 
     # Save results
     save_results(results, output_path)
