@@ -15,10 +15,10 @@ digraph {
     "update-env" [color = "blue"]
 #rm-env:
     "rm-env" [color = "blue"]
-#coding-standards: ../common/coding-standards
+#coding-standards: ../common/coding-standards/python
     "coding-standards" [color = "blue"]
-    "../common/coding-standards" [color = "blue"]
-    "../common/coding-standards" -> "coding-standards"
+    "../common/coding-standards/python" [color = "blue"]
+    "../common/coding-standards/python" -> "coding-standards"
 #data/horsefacebase: data/TunHorseDB2015 src/scripts/xbasefaces.py
     "data/horsefacebase" [color = "blue"]
     "data/TunHorseDB2015" [color = "blue"]
@@ -30,23 +30,23 @@ digraph {
     "data/horsefacebase" -> "data/horsefacecrop"
     "src/scripts/xcropfaces.py" [color = "green"]
     "src/scripts/xcropfaces.py" -> "data/horsefacecrop"
-#prep-data: data/THGtraining data/THGvalidation data/THGtest
-    "prep-data" [color = "blue"]
+#resnet50-47-prep-data: data/THGtraining data/THGvalidation data/THGtest
+    "resnet50-47-prep-data" [color = "blue"]
     "data/THGtraining" [color = "blue"]
-    "data/THGtraining" -> "prep-data"
+    "data/THGtraining" -> "resnet50-47-prep-data"
     "data/THGvalidation" [color = "blue"]
-    "data/THGvalidation" -> "prep-data"
+    "data/THGvalidation" -> "resnet50-47-prep-data"
     "data/THGtest" [color = "blue"]
-    "data/THGtest" -> "prep-data"
-#data/THGtraining data/THGvalidation data/THGtest &: data/TunHorseDB2015G src/scripts/prep_data.py
+    "data/THGtest" -> "resnet50-47-prep-data"
+#data/THGtraining data/THGvalidation data/THGtest &: data/TunHorseDB2015G experiments/ResNet50-47/prep_data.py
     "data/TunHorseDB2015G" [color = "blue"]
     "data/TunHorseDB2015G" -> "data/THGtraining"
-    "src/scripts/prep_data.py" [color = "green"]
-    "src/scripts/prep_data.py" -> "data/THGtraining"
+    "experiments/ResNet50-47/prep_data.py" [color = "green"]
+    "experiments/ResNet50-47/prep_data.py" -> "data/THGtraining"
     "data/TunHorseDB2015G" -> "data/THGvalidation"
-    "src/scripts/prep_data.py" -> "data/THGvalidation"
+    "experiments/ResNet50-47/prep_data.py" -> "data/THGvalidation"
     "data/TunHorseDB2015G" -> "data/THGtest"
-    "src/scripts/prep_data.py" -> "data/THGtest"
+    "experiments/ResNet50-47/prep_data.py" -> "data/THGtest"
 #resnet50-47-models: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth
     "resnet50-47-models" [color = "blue"]
     "experiments/ResNet50-47/models/best_model.pth" [color = "blue"]
@@ -63,23 +63,73 @@ digraph {
     "data/THGvalidation" -> "experiments/ResNet50-47/models/final_model.pth"
     "data/THGtest" -> "experiments/ResNet50-47/models/final_model.pth"
     "experiments/ResNet50-47/train_model.py" -> "experiments/ResNet50-47/models/final_model.pth"
-#resnet50-47-training_history: experiments/ResNet50-47/training_history.png
-    "resnet50-47-training_history" [color = "blue"]
+#resnet50-47-training-history: experiments/ResNet50-47/training_history.png
+    "resnet50-47-training-history" [color = "blue"]
     "experiments/ResNet50-47/training_history.png" [color = "blue"]
-    "experiments/ResNet50-47/training_history.png" -> "resnet50-47-training_history"
+    "experiments/ResNet50-47/training_history.png" -> "resnet50-47-training-history"
 #experiments/ResNet50-47/training_history.png &: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/models/final_model.pth experiments/ResNet50-47/visualize_training.py
     "experiments/ResNet50-47/models/best_model.pth" -> "experiments/ResNet50-47/training_history.png"
     "experiments/ResNet50-47/models/final_model.pth" -> "experiments/ResNet50-47/training_history.png"
     "experiments/ResNet50-47/visualize_training.py" [color = "green"]
     "experiments/ResNet50-47/visualize_training.py" -> "experiments/ResNet50-47/training_history.png"
-#test_results: experiments/ResNet50-47/test_results.csv
-    "test_results" [color = "blue"]
+#resnet50-47-test-results: experiments/ResNet50-47/test_results.csv
+    "resnet50-47-test-results" [color = "blue"]
     "experiments/ResNet50-47/test_results.csv" [color = "blue"]
-    "experiments/ResNet50-47/test_results.csv" -> "test_results"
+    "experiments/ResNet50-47/test_results.csv" -> "resnet50-47-test-results"
 #experiments/ResNet50-47/test_results.csv: experiments/ResNet50-47/models/best_model.pth experiments/ResNet50-47/test_model.py
     "experiments/ResNet50-47/models/best_model.pth" -> "experiments/ResNet50-47/test_results.csv"
     "experiments/ResNet50-47/test_model.py" [color = "green"]
     "experiments/ResNet50-47/test_model.py" -> "experiments/ResNet50-47/test_results.csv"
+#resnet50-47f-prep-data: data/THFtraining data/THFvalidation data/THFtest
+    "resnet50-47f-prep-data" [color = "blue"]
+    "data/THFtraining" [color = "blue"]
+    "data/THFtraining" -> "resnet50-47f-prep-data"
+    "data/THFvalidation" [color = "blue"]
+    "data/THFvalidation" -> "resnet50-47f-prep-data"
+    "data/THFtest" [color = "blue"]
+    "data/THFtest" -> "resnet50-47f-prep-data"
+#data/THFtraining data/THFvalidation data/THFtest &: data/TunHorseDB2015F experiments/ResNet50-47F/prep_data.py
+    "data/TunHorseDB2015F" [color = "blue"]
+    "data/TunHorseDB2015F" -> "data/THFtraining"
+    "experiments/ResNet50-47F/prep_data.py" [color = "green"]
+    "experiments/ResNet50-47F/prep_data.py" -> "data/THFtraining"
+    "data/TunHorseDB2015F" -> "data/THFvalidation"
+    "experiments/ResNet50-47F/prep_data.py" -> "data/THFvalidation"
+    "data/TunHorseDB2015F" -> "data/THFtest"
+    "experiments/ResNet50-47F/prep_data.py" -> "data/THFtest"
+#resnet50-47f-models: experiments/ResNet50-47F/models/best_model.pth experiments/ResNet50-47F/models/final_model.pth
+    "resnet50-47f-models" [color = "blue"]
+    "experiments/ResNet50-47F/models/best_model.pth" [color = "blue"]
+    "experiments/ResNet50-47F/models/best_model.pth" -> "resnet50-47f-models"
+    "experiments/ResNet50-47F/models/final_model.pth" [color = "blue"]
+    "experiments/ResNet50-47F/models/final_model.pth" -> "resnet50-47f-models"
+#experiments/ResNet50-47F/models/best_model.pth experiments/ResNet50-47F/models/final_model.pth &: data/THFtraining data/THFvalidation data/THFtest experiments/ResNet50-47F/train_model.py
+    "data/THFtraining" -> "experiments/ResNet50-47F/models/best_model.pth"
+    "data/THFvalidation" -> "experiments/ResNet50-47F/models/best_model.pth"
+    "data/THFtest" -> "experiments/ResNet50-47F/models/best_model.pth"
+    "experiments/ResNet50-47F/train_model.py" [color = "green"]
+    "experiments/ResNet50-47F/train_model.py" -> "experiments/ResNet50-47F/models/best_model.pth"
+    "data/THFtraining" -> "experiments/ResNet50-47F/models/final_model.pth"
+    "data/THFvalidation" -> "experiments/ResNet50-47F/models/final_model.pth"
+    "data/THFtest" -> "experiments/ResNet50-47F/models/final_model.pth"
+    "experiments/ResNet50-47F/train_model.py" -> "experiments/ResNet50-47F/models/final_model.pth"
+#resnet50-47f-training-history: experiments/ResNet50-47F/training_history.png
+    "resnet50-47f-training-history" [color = "blue"]
+    "experiments/ResNet50-47F/training_history.png" [color = "blue"]
+    "experiments/ResNet50-47F/training_history.png" -> "resnet50-47f-training-history"
+#experiments/ResNet50-47F/training_history.png &: experiments/ResNet50-47F/models/best_model.pth experiments/ResNet50-47F/models/final_model.pth experiments/ResNet50-47F/visualize_training.py
+    "experiments/ResNet50-47F/models/best_model.pth" -> "experiments/ResNet50-47F/training_history.png"
+    "experiments/ResNet50-47F/models/final_model.pth" -> "experiments/ResNet50-47F/training_history.png"
+    "experiments/ResNet50-47F/visualize_training.py" [color = "green"]
+    "experiments/ResNet50-47F/visualize_training.py" -> "experiments/ResNet50-47F/training_history.png"
+#resnet50-47f-test-results: experiments/ResNet50-47F/test_results.csv
+    "resnet50-47f-test-results" [color = "blue"]
+    "experiments/ResNet50-47F/test_results.csv" [color = "blue"]
+    "experiments/ResNet50-47F/test_results.csv" -> "resnet50-47f-test-results"
+#experiments/ResNet50-47F/test_results.csv: experiments/ResNet50-47F/models/best_model.pth experiments/ResNet50-47F/test_model.py
+    "experiments/ResNet50-47F/models/best_model.pth" -> "experiments/ResNet50-47F/test_results.csv"
+    "experiments/ResNet50-47F/test_model.py" [color = "green"]
+    "experiments/ResNet50-47F/test_model.py" -> "experiments/ResNet50-47F/test_results.csv"
 #jupl: ALWAYS
     "jupl" [color = "blue"]
     "ALWAYS" [color = "blue"]
